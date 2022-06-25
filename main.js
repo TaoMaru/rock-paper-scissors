@@ -56,20 +56,22 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
+function getNumRounds() {
+    return parseInt(window.prompt("How many rounds would you like to play? "));
+}
+
+function getPlayerChoice() {
+    return window.prompt("Please enter 'Rock', 'Paper', or 'Scissors': ")
+}
+
+
+
 function game(numRounds) {
-    let playerPick;
     let playerMove;
     for(let currentRound = 0; currentRound < numRounds; currentRound++) {
-        playerPick = Math.floor( Math.random() * 3);
-        if(playerPick === 1) {
-            playerMove = "rock";
-        }
-        else if(playerPick === 2) {
-            playerMove = "paper";
-        }
-        else {
-            playerMove = "scissors";
-        }
+        playerMove = getPlayerChoice();
         console.log(playRound(playerMove, computerPlay()));
     }
 }
+
+game(getNumRounds());
