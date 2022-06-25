@@ -64,14 +64,31 @@ function getPlayerChoice() {
     return window.prompt("Please enter 'Rock', 'Paper', or 'Scissors': ")
 }
 
-
+function keepScore(numRounds, numPlayerWins) {
+    if(numPlayerWins > Math.floor(numRounds/2)) {
+        return "Congratulations! You Win!";
+    }
+    else if(numRounds % 2 == 0 && numPlayerWins == numRounds / 2) {
+        return "It's a Draw!";
+    }
+    else {
+        return "You Lose! Better luck next time!";
+    }
+}
 
 function game(numRounds) {
+    let playerWins = 0;
     let playerMove;
+    let roundResult = "";
     for(let currentRound = 0; currentRound < numRounds; currentRound++) {
         playerMove = getPlayerChoice();
-        console.log(playRound(playerMove, computerPlay()));
+        roundResult = playRound(playerMove, computerPlay());
+        console.log(roundResult);
+        if(roundResult.includes("You Win")) {
+            playerWins++;
+        };
     }
+    console.log(keepScore(numRounds, playerWins));
 }
 
 game(getNumRounds());
