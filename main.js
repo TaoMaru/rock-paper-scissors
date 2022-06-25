@@ -10,9 +10,11 @@ function computerPlay() {
         return "Scissors";
     }
 }
+
 const ROCKWIN = "Rock beats scissors!";
 const PAPERWIN = "Paper beats rock!";
 const SCISSORSWIN = "Scissors beats paper!";
+
 function playRound(playerSelection, computerSelection) {
     let playerChoice = playerSelection.toLowerCase();
     let computerChoice = computerSelection.toLowerCase();
