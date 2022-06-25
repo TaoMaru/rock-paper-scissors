@@ -20,7 +20,7 @@ function playRound(playerSelection, computerSelection) {
     let computerChoice = computerSelection.toLowerCase();
     if(playerChoice == "rock") {
         if(computerChoice == "paper") {
-            return `You Lose ${PAPERWIN}`;
+            return `You Lose! ${PAPERWIN}`;
         }
         else if(computerChoice == "scissors") {
             return `You Win! ${ROCKWIN}`;
@@ -53,5 +53,23 @@ function playRound(playerSelection, computerSelection) {
     }
     else {
         return "Oops! Try again! Will it be Rock, Paper, or Scissors?";
+    }
+}
+
+function game(numRounds) {
+    let playerPick;
+    let playerMove;
+    for(let currentRound = 0; currentRound < numRounds; currentRound++) {
+        playerPick = Math.floor( Math.random() * 3);
+        if(playerPick === 1) {
+            playerMove = "rock";
+        }
+        else if(playerPick === 2) {
+            playerMove = "paper";
+        }
+        else {
+            playerMove = "scissors";
+        }
+        console.log(playRound(playerMove, computerPlay()));
     }
 }
