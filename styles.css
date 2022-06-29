@@ -1,3 +1,7 @@
+html {
+    text-align: center;
+}
+
 .gameBoard>button {
     height: 40px;
     width : auto;
@@ -11,4 +15,17 @@
     box-shadow: 0 0 2px #f18b8b;
     transform: scale(1.1);
     transition: all 0.05s ease;
+}
+
+.winner {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1db91daf;
+}
+
+.loser {
+    font-size: 22px;
+    font-weight: bold;
+    font-style: italic;
+    color: #852f0d;
 }

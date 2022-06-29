@@ -68,20 +68,20 @@ function playGame(e) {
     let playerChoice;
     playerChoice = e.target.className;
     e.target.classList.add("clicked");
-    console.log(e);
    
     let roundResult = playRound(playerChoice, computerPlay());
 
-    //let newScore = document.createElement("p");
     scoreList.textContent = roundResult;
     keepScore(roundResult);
     runningScore.textContent = "Score: Player: " + playerScore + 
         " | Computer: " + computerScore;
-    if(playerScore === 5) {
+    if(playerScore >= 5) {
         runningScore.textContent = CONGRATS;
+        runningScore.classList.add("winner");
     }
-    else if(computerScore === 5) {
+    else if(computerScore >= 5) {
         runningScore.textContent = LOSS;
+        runningScore.classList.add("loser");
     }
 };
 
