@@ -1,3 +1,5 @@
+// randomize computer's RPS selection, return
+// string value:
 function computerPlay() {
     let randomChoice = Math.floor(Math.random() * 3);
     if(randomChoice === 1) {
@@ -11,13 +13,17 @@ function computerPlay() {
     }
 }
 
+
+// string win/loss vars for each round of gameplay:
 const ROCKWIN = "Rock beats scissors!";
 const PAPERWIN = "Paper beats rock!";
 const SCISSORSWIN = "Scissors beats paper!";
 
+
+// Play one round of RPS: playerSelection passed as arg
+// from click event; computerSelection randomized and
+// passed as arg.
 function playRound(playerSelection, computerSelection) {
-    //let playerChoice = playerSelection.toLowerCase();
-    //let computerChoice = computerSelection.toLowerCase();
     if(playerSelection == "rock") {
         if(computerSelection == "paper") {
             return `You Lose! ${PAPERWIN}`;
@@ -54,13 +60,11 @@ function playRound(playerSelection, computerSelection) {
     else {
         return "Oops! Try again! Will it be Rock, Paper, or Scissors?";
     }
-}
+};
 
-function getNumRounds() {
-    return parseInt(window.prompt("How many rounds would you like to play? "));
-}
 
-function getPlayerChoice(e) {
+// Play full Bo5 game of RPS:
+function playGame(e) {
     let playerChoice;
     playerChoice = e.target.className;
     e.target.classList.add("clicked");
@@ -70,50 +74,54 @@ function getPlayerChoice(e) {
 
     //let newScore = document.createElement("p");
     scoreList.textContent = roundResult;
-    
+    keepScore(roundResult);
+    runningScore.textContent = "Score: Player: " + playerScore + 
+        " | Computer: " + computerScore;
+    if(playerScore === 5) {
+        runningScore.textContent = CONGRATS;
+    }
+    else if(computerScore === 5) {
+        runningScore.textContent = LOSS;
+    }
 };
 
+// string win/loss vars:
+const CONGRATS = "You Won!! Congratulations!";
+const LOSS = "You Lost! Better luck next time!";
+
+// remove the 'clicked' styling by removing the
+// 'clicked' class from btn
 function removeClickedStyle(e) {
     e.target.classList.remove("clicked");
 };
 
-function keepScore(numRounds, numPlayerWins) {
-    if(numPlayerWins > Math.floor(numRounds/2)) {
-        return "Congratulations! You Win!";
+// Increment player and computer scores based
+// on result of each round played
+function keepScore(resultOfRound) {
+    if(resultOfRound.includes("You Win")) {
+        playerScore++;
+        return;
     }
-    else if(numRounds % 2 == 0 && numPlayerWins == numRounds / 2) {
-        return "It's a Draw!";
+    if(resultOfRound.includes("You Lose")) {
+        computerScore++;
+        return;
     }
-    else {
-        return "You Lose! Better luck next time!";
-    }
-}
+    
+};
 
-function game(numRounds) {
-    let playerWins = 0;
-    let playerMove;
-    let roundResult = "";
-    for(let currentRound = 0; currentRound < numRounds; currentRound++) {
-        playerMove = getPlayerChoice();
-        roundResult = playRound(playerMove, computerPlay());
-        console.log(roundResult);
-        if(roundResult.includes("You Win")) {
-            playerWins++;
-        };
-    }
-    console.log(keepScore(numRounds, playerWins));
-}
-
-//game(getNumRounds());
+//Event Listeners and DOM vars:
 
 const gameArea = document.querySelector('.gameBoard');
 const scoreBoard = document.querySelector(".scoreBoard");
 const scoreList = document.createElement("p");
 scoreBoard.appendChild(scoreList);
+const runningScore = document.querySelector(".currentScore");
+let playerScore = 0;
+let computerScore = 0;
 
 
 const choiceButtons = document.querySelectorAll('.gameBoard button');
 choiceButtons.forEach( (btn) => {
-    btn.addEventListener('click', getPlayerChoice);
+    btn.addEventListener('click', playGame);
     btn.addEventListener('transitionend', removeClickedStyle);
 });
