@@ -1,13 +1,13 @@
 function computerPlay() {
     let randomChoice = Math.floor(Math.random() * 3);
     if(randomChoice === 1) {
-        return "Rock";
+        return "rock";
     }
     else if(randomChoice === 2) {
-        return "Paper";
+        return "paper";
     }
     else {
-        return "Scissors";
+        return "scissors";
     }
 }
 
@@ -16,35 +16,35 @@ const PAPERWIN = "Paper beats rock!";
 const SCISSORSWIN = "Scissors beats paper!";
 
 function playRound(playerSelection, computerSelection) {
-    let playerChoice = playerSelection.toLowerCase();
-    let computerChoice = computerSelection.toLowerCase();
-    if(playerChoice == "rock") {
-        if(computerChoice == "paper") {
+    //let playerChoice = playerSelection.toLowerCase();
+    //let computerChoice = computerSelection.toLowerCase();
+    if(playerSelection == "rock") {
+        if(computerSelection == "paper") {
             return `You Lose! ${PAPERWIN}`;
         }
-        else if(computerChoice == "scissors") {
+        else if(computerSelection == "scissors") {
             return `You Win! ${ROCKWIN}`;
         }
         else {
             return `It's a Draw! You both chose Rock!`;
         }
     }
-    else if(playerChoice == "paper") {
-        if(computerChoice == "scissors") {
+    else if(playerSelection == "paper") {
+        if(computerSelection == "scissors") {
             return `You Lose! ${SCISSORSWIN}`;
         }
-        else if(computerChoice == "rock") {
+        else if(computerSelection == "rock") {
             return `You Win! ${PAPERWIN}`;
         }
         else {
             return `It's a Draw! You both chose Paper!`;
         }
     }
-    else if(playerChoice == "scissors") {
-        if(computerChoice == "rock") {
+    else if(playerSelection == "scissors") {
+        if(computerSelection == "rock") {
             return `You Lose! ${ROCKWIN}`;
         }
-        else if(computerChoice == "paper") {
+        else if(computerSelection == "paper") {
             return `You Win! ${SCISSORSWIN}`;
         }
         else {
@@ -60,9 +60,22 @@ function getNumRounds() {
     return parseInt(window.prompt("How many rounds would you like to play? "));
 }
 
-function getPlayerChoice() {
-    return window.prompt("Please enter 'Rock', 'Paper', or 'Scissors': ")
-}
+function getPlayerChoice(e) {
+    let playerChoice;
+    playerChoice = e.target.className;
+    e.target.classList.add("clicked");
+    console.log(e);
+   
+    let roundResult = playRound(playerChoice, computerPlay());
+
+    //let newScore = document.createElement("p");
+    scoreList.textContent = roundResult;
+    
+};
+
+function removeClickedStyle(e) {
+    e.target.classList.remove("clicked");
+};
 
 function keepScore(numRounds, numPlayerWins) {
     if(numPlayerWins > Math.floor(numRounds/2)) {
@@ -91,4 +104,16 @@ function game(numRounds) {
     console.log(keepScore(numRounds, playerWins));
 }
 
-game(getNumRounds());
+//game(getNumRounds());
+
+const gameArea = document.querySelector('.gameBoard');
+const scoreBoard = document.querySelector(".scoreBoard");
+const scoreList = document.createElement("p");
+scoreBoard.appendChild(scoreList);
+
+
+const choiceButtons = document.querySelectorAll('.gameBoard button');
+choiceButtons.forEach( (btn) => {
+    btn.addEventListener('click', getPlayerChoice);
+    btn.addEventListener('transitionend', removeClickedStyle);
+});

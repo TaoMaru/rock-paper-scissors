@@ -1,0 +1,14 @@
+.gameBoard>button {
+    height: 40px;
+    width : auto;
+    padding: 5px 10px;
+    text-align: center;
+    border: 2px solid #ff0000;
+}
+
+.clicked {
+    border: 2px solid #726060;
+    box-shadow: 0 0 2px #f18b8b;
+    transform: scale(1.1);
+    transition: all 0.05s ease;
+}
